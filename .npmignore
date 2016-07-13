@@ -1,6 +1,7 @@
+/node_modules/
+.DS_Store
+*.log
+
 .gitignore
 webpack.config.js
-*.log
 /test/
-/dist/
-/node_modules/
