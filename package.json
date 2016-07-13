@@ -14,6 +14,14 @@
     "composite",
     "fonts"
   ],
+  "scripts": {
+    "build:dev": "NODE_ENV=development webpack",
+    "build:prod": "NODE_ENV=production webpack",
+    "build:test": "NODE_ENV=test webpack",
+    "build:all": "npm run build:dev && npm run build:prod && npm run build:test",
+    "clean": "rimraf dist",
+    "prepublish": "npm run clean && npm run build:all"
+  },
   "dependencies": {
     "jquery": "~2.1.4"
   },
@@ -22,5 +30,9 @@
   "bugs": {
     "url": "https://github.com/multilingualjs/multilingual.js/issues"
   },
-  "homepage": "https://multilingualjs.github.io"
+  "homepage": "https://multilingualjs.github.io",
+  "devDependencies": {
+    "rimraf": "^2.5.3",
+    "webpack": "^1.13.1"
+  }
 }
