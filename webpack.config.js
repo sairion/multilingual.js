@@ -1,22 +1,35 @@
 var webpack = require('webpack');
 var path = require("path");
-var PROD = JSON.parse(process.env.PROD_ENV || '0');
+var PROD = process.env.NODE_ENV === 'production'
+var TEST = process.env.NODE_ENV === 'test'
+
+var entry = {
+  "./dist/jquery.multilingual": "./src/jquery.multilingual.js",
+};
+var plugins = [];
+var filename;
+
+if (TEST) {
+  entry["./test/js/test"] = ["./test/test.js"]
+}
+
+if (PROD) {
+  plugins.push(new webpack.optimize.UglifyJsPlugin({
+    sourceMap: true,
+    mangle: false,
+    compress: {
+      warnings: false
+    }
+  }))
+}
 
 var config  = {
-  entry: {
-  	"./dist/jquery.multilingual": "./src/jquery.multilingual.js",
-  	"./test/js/test": ["./test/test.js"]
-  },
+  entry: entry,
   output: {
-  	path: "./",
+    path: "./",
     filename: PROD ? "[name].min.js" : "[name].js"
   },
-  plugins: PROD ? [
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      mangle: false
-    })
-  ] : []
+  plugins: plugins
 }
 
 module.exports = config;
